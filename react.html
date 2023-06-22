@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='https://unpkg.com/react@16.3.1/umd/react.production.min.js'></script>
+    <script src='https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js'>    </script>
+    <script src='https://unpkg.com/react-router-dom@5.0.0/umd/react-router-dom.min.js'></script>
+    <script src='https://unpkg.com/babel-standalone@6.26.0/babel.js'></script>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+    <div id='root'></div>
+
+    <script src="./atmImprovementsSoln.jsx" type="text/babel"></script>
+
+    <!-- START OF INCLASS STUFF -->
+    <!-- <script type='text/babel'>
+
+        const App = () => {
+
+            const [state, setState] = React.useState([{ name: "runa", age: 4 }, { name: "luna", age: 9 }, { name: "hunter", age: 8 }])
+            const [joke, setJoke] = React.useState("")
+            const [width, setWidth]= React.useState(0)
+            console.log(state)
+            //   setState("here")
+            //   setState("")
+
+            React.useEffect(()=>{
+                fetch("https://api.chucknorris.io/jokes/random")
+                .then(data=>data.json())
+                .then(cleanedData=>{
+                   
+                    setJoke(cleanedData.value)
+                    setWidth(window.innerWidth)
+                })
+            },[])
+
+            //111
+            //111
+            //111
+
+            function banana(e) {
+                //     console.log("inside banana")
+                //    var newArray = state.map(d =>{
+                //     if(d.name=="luna"){
+                //         d.name ="Luna good dog"
+                //         return d
+                //     }
+                //     return d
+                //    })
+                
+                console.log("Invoked")
+            }
+
+//TODO: RENDER MAP OBJECTS IN ARRAY
+            function viewState() {
+                console.log(state)
+            }
+
+            return (
+                <div>
+                    <div onClick={(e) => { banana(e) }}>
+                        anything
+                    </div>
+                    <div id="runa" onClick={(e) => { banana(e) }}>
+                        runa
+                    </div>
+                    <div onClick={(e) => { banana(e) }}>
+                        is
+                    </div>
+                    <div onClick={(e) => { banana(e) }}>
+                        good 
+                    </div>
+                    <div>
+                        {joke}
+                    </div>
+                    <div>
+                        your screen width is {width}
+                        </div>
+                </div>
+            )
+        }
+
+
+        ReactDOM.render(<App />, document.querySelector('#root'));
+
+    </script> -->
+
+    <!-- END INCLASS STUFF -->
+</body>
+
+</html>

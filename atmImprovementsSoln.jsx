@@ -1,0 +1,123 @@
+const ATMDeposit = ({ onChange, isDeposit, isValid }) => {
+  const choice = ['Deposit', 'Cash Back'];
+  console.log(`ATM isDeposit: ${isDeposit}`);
+  //
+  return (
+    <label className="label huge">
+      <h3> {choice[isDeposit ? 0 : 1]}</h3>
+      <input id="number-input" type="number" width="200" onChange={onChange}></input>
+      <input type="submit" disabled={!isValid} width="200" value="Submit" id="submit-input"></input>
+    </label>
+  );
+};
+// {banana:"JOKE GOES HERE", jokeId:9, approperate:true}
+const DisplayJoke = (props) => {
+  const {banana} = props
+  return (
+    <h3 id="joke">
+      {banana}
+    </h3>
+  );
+};
+
+const Account = () => {
+  // let deposit = 0; // state of this transaction
+  const [deposit, setDeposit] = React.useState(0);
+  const [totalState, setTotalState] = React.useState(0);
+  const [isDeposit, setIsDeposit] = React.useState(true);
+  const [atmMode, setAtmMode] = React.useState('');
+  const [validTransaction, setValidTransaction] = React.useState(false);
+  const [joke, setJoke] = React.useState('');
+  const [dadJoke, setDadJoke] = React.useState("")
+
+  React.useEffect(() => {
+    fetch("https://api.chucknorris.io/jokes/random")
+      .then(data => data.json())
+      .then(cleanedData => {
+        console.log("Chuck")
+        setJoke(cleanedData.value)
+      })
+
+      fetch("https://icanhazdadjoke.com/slack")
+      .then(data => data.json())
+      .then(cleanedData => {
+        console.log("Dad")
+        setDadJoke(cleanedData.attachments[0].fallback)
+      })
+
+
+  },[atmMode])
+
+  let status = `Account Balance $ ${totalState} `;
+  console.log(`Account Rendered with isDeposit: ${isDeposit}`);
+
+  const handleChange = (event) => {
+    console.log(Number(event.target.value));
+    if (Number(event.target.value) <= 0) {
+      return setValidTransaction(false);
+    }
+    if (atmMode === 'Cash Back' && Number(event.target.value) > totalState) {
+      setValidTransaction(false);
+    } else {
+      setValidTransaction(true);
+    }
+    setDeposit(Number(event.target.value));
+  };
+
+  const handleSubmit = (event) => {
+    let newTotal = isDeposit ? totalState + deposit : totalState - deposit;
+    setTotalState(newTotal);
+    setValidTransaction(false);
+    event.preventDefault();
+  };
+
+  const handleModeSelect = (event) => {
+    console.log("-----------")
+    console.log(event)
+    console.log("-----------")
+    console.log(event.target.value);
+    setAtmMode(event.target.value); //Depost || Cash Back
+    setValidTransaction(false);
+    if (event.target.value === 'Deposit') {
+      setIsDeposit(true);
+    } else {
+      setIsDeposit(false);
+    }
+  };
+
+  // if(true || true){
+  //run this code
+  //}
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <h2 id="total">{status}</h2>
+          <label>Select an action below to continue</label>
+          <select onChange={function (e) { handleModeSelect(e) }} name="mode" id="mode-select">
+            <option id="no-selection" value=""></option>
+            <option id="deposit-selection" value="Deposit">
+              Deposit
+            </option>
+            <option id="cashback-selection" value="Cash Back">
+              Cash Back
+            </option>
+          </select>
+          {atmMode ? (
+            <ATMDeposit
+              onChange={handleChange}
+              isDeposit={isDeposit}
+              isValid={validTransaction}
+            ></ATMDeposit>
+          ) : " "}
+        </div>
+      </form>
+      <DisplayJoke banana={joke} jokeId={9} approperate={true}/>
+      <DisplayJoke banana={dadJoke} jokeId={10} approperate={true}/>
+      {/* <h3>{dadJoke}</h3> */}
+    </div>
+  );
+};
+// ========================================
+ReactDOM.render(<Account />, document.getElementById('root'));
